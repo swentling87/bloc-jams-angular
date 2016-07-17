@@ -21,8 +21,7 @@
  */
     var setSong = function(song) {
       if(currentBuzzObject) {
-        currentBuzzObject.stop();
-        SongPlayer.currentSong.playing = null;
+        stopSong();
       }
 
       currentBuzzObject = new buzz.sound(song.audioUrl, {
@@ -31,9 +30,23 @@
       });
       SongPlayer.currentSong = song;
     };
-
+/**
+ * @function getSongIndex
+ * @desc returns the index of the song in the selected album
+ * @param {Object} song
+ */
     var getSongIndex = function(song) {
       return currentAlbum.songs.indexOf(song);
+    };
+
+/**
+ * @function stopSong
+ * @desc stops the current song and sets it to null
+ * @param {Object} song
+ */
+    var stopSong = function() {
+      currentBuzzObject.stop();
+      SongPlayer.currentSong.playing = null;
     };
 /**
 * @desc Sets the current song file to null as default
@@ -88,8 +101,24 @@
       currentSongIndex--;
 
       if(currentSongIndex < 0 ) {
-        currentBuzzObject.stop();
-        SongPlayer.currentSong.playing = null;
+        stopSong();
+      } else {
+        var song = currentAlbum.songs[currentSongIndex];
+        setSong(song);
+        playSong(song);
+      }
+    }
+/**
+ * @function SongPlayer.previous
+ * @desc  Selects the previous song in relation to the current song
+ * @param {Object} song
+ */
+    SongPlayer.next = function() {
+      var currentSongIndex = getSongIndex(SongPlayer.currentSong);
+      currentSongIndex++;
+
+      if(currentSongIndex > (currentAlbum.songs.length - 1)  ) {
+        stopSong();
       } else {
         var song = currentAlbum.songs[currentSongIndex];
         setSong(song);
@@ -99,6 +128,22 @@
 
     return SongPlayer;
   }
+
+  var filterTimeCode = function(timeInSeconds) {
+    var seconds = Number.parseFloat(timeInSeconds);
+    var wholeSeconds = Math.floor(seconds);
+    var minutes = Math.floor(wholeSeconds / 60);
+
+    var remainingSeconds = wholeSeconds % 60;
+    var output = minutes + ':';
+
+    if (remainingSeconds < 10) {
+        output += '0';
+    }
+
+    output += remainingSeconds;
+    return output;
+};
 
   angular
     .module('blocJams')
