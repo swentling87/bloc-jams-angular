@@ -149,25 +149,24 @@
         currentBuzzObject.setTime(time);
       }
     };
+/**
+ * @desc Default volume setting
+ * @type {Number}
+ */
+    SongPlayer.volume = 80;
+/**
+* @function setVolume
+* @desc Set the volume of currently playing song
+* @param {Number} volume
+*/
+    SongPlayer.setVolume = function(value) {
+      if (currentBuzzObject) {
+        currentBuzzObject.setVolume(value);
+      }
+    };
 
     return SongPlayer;
   }
-
-  var filterTimeCode = function(timeInSeconds) {
-    var seconds = Number.parseFloat(timeInSeconds);
-    var wholeSeconds = Math.floor(seconds);
-    var minutes = Math.floor(wholeSeconds / 60);
-
-    var remainingSeconds = wholeSeconds % 60;
-    var output = minutes + ':';
-
-    if (remainingSeconds < 10) {
-        output += '0';
-    }
-
-    output += remainingSeconds;
-    return output;
-};
 
   angular
     .module('blocJams')
