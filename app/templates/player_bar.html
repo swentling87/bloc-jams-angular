@@ -25,6 +25,13 @@
      <div class="control-group volume">
        <span class="icon ion-volume-high"></span>
        <seek-bar value="{{ playerBar.songPlayer.volume }}" max="100" on-change="playerBar.songPlayer.setVolume(value)"></seek-bar>
+       <div>
+         <a class="mute-unumute">
+           <span class="icon ion-volume-mute" ng-show="!playerBar.songPlayer.muted" ng-click="playerBar.songPlayer.mute()"> Mute</span>
+           <span class="icon ion-volume-medium" ng-show="playerBar.songPlayer.muted" ng-click="playerBar.songPlayer.unmute(playerBar.songPlayer.priorVolume)"> Unmute</span>
+         </a>
+       </div>
+       </div>
      </div>
    </div>
  </section>

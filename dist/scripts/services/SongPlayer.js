@@ -32,11 +32,15 @@
       currentBuzzObject.bind('timeupdate', function() {
         $rootScope.$apply(function() {
           SongPlayer.currentTime = currentBuzzObject.getTime();
+          if (currentBuzzObject.isEnded()) {
+            SongPlayer.next();
+          }
         });
       });
 
       SongPlayer.currentSong = song;
     };
+
 /**
  * @function getSongIndex
  * @desc returns the index of the song in the selected album
@@ -162,6 +166,35 @@
     SongPlayer.setVolume = function(value) {
       if (currentBuzzObject) {
         currentBuzzObject.setVolume(value);
+        SongPlayer.muted = false;
+      }
+    };
+/**
+ * @desc Sets the variable for the prior volume setting to be retained for unmuting
+ * @type {Number}
+ */
+    SongPlayer.priorVolume = null;
+/**
+* @function mute
+* @desc Set the volume of currently playing song to zero
+* @param {Number} volume
+*/
+    SongPlayer.mute = function() {
+      if (currentBuzzObject) {
+        SongPlayer.priorVolume = currentBuzzObject.volume;
+        currentBuzzObject.setVolume(0);
+        SongPlayer.muted = true;
+      }
+    };
+/**
+* @function unmute
+* @desc Set the volume of currently playing song back to it's prior pre-muting value
+* @param {Number} volume
+*/
+    SongPlayer.unmute = function(value) {
+      if (currentBuzzObject) {
+        currentBuzzObject.setVolume(value);
+        SongPlayer.muted = false;
       }
     };
 
