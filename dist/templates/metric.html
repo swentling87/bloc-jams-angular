@@ -1,0 +1,12 @@
+<section class="container clearfix" ng-app="blocJams" ng-controller="MetricCtrl">
+  <h1>Songs Played</h1>
+  <table>
+    <tr ng-repeat="song in metric.list track by $index">
+      <td>
+        {{ song }}
+      </td>
+    </tr>
+  </table>
+</section>
+<ng-include src="'/templates/player_bar.html'"></ng-include>
+z
