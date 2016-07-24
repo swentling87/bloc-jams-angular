@@ -1,5 +1,5 @@
 (function() {
-  function SongPlayer($rootScope, Fixtures) {
+  function SongPlayer($rootScope, Fixtures, Metric) {
 /**
 * @desc Sets the SongPlayer object to an empty object as default
 * @type {Object}
@@ -39,6 +39,8 @@
       });
 
       SongPlayer.currentSong = song;
+
+      Metric.registerSongPlay(song);
     };
 
 /**
@@ -203,5 +205,5 @@
 
   angular
     .module('blocJams')
-    .factory('SongPlayer', ['$rootScope', 'Fixtures', SongPlayer]);
+    .factory('SongPlayer', ['$rootScope', 'Fixtures', 'Metric', SongPlayer]);
 })();
