@@ -1,12 +1,14 @@
 <section class="container clearfix" ng-app="blocJams" ng-controller="MetricCtrl">
   <h1>Songs Played</h1>
+  <nvd3 options="options" data="data"></nvd3>
   <table>
-    <tr ng-repeat="song in metric.list track by $index">
+    <tr ng-repeat="song in metric.names track by $index">
       <td>
         {{ song }}
+      </td>
+      <td>
+        {{ metric.times[$index] | date : 'MMM d, y h:mm:ss a'}}
       </td>
     </tr>
   </table>
 </section>
-<ng-include src="'/templates/player_bar.html'"></ng-include>
-z
